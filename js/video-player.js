@@ -64,7 +64,7 @@ class VideoPlayer {
         };
         this.video.onloadeddata = () => this.video.currentTime = videoCurrentTime || 0;
         this.video.onwaiting = () => this.createLoader();
-        this.video.onprogress = () => this?.loader?.remove();
+        this.video.oncanplay = () => this?.loader?.remove();
         parentElemVideo.appendChild(this.video);
 
         // Controls
@@ -163,6 +163,7 @@ class VideoPlayer {
     };
 
     createLoader = () => {
+        if(this.loader) return;
         let loader = document.createElement("div");
         loader.classList.add("loader");
             let spinner = document.createElement("div");
