@@ -14,7 +14,6 @@ This project was inspired by the default video player (Pictures) in Windows 11.
 <div class="video-player" id="video-player"></div>
 <script>
     new VideoPlayer(document.getElementById("video-player"), {
-        videoId: Number,
         videoSrc: String,
         videoPoster: String
     });
