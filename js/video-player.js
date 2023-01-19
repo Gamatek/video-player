@@ -41,7 +41,8 @@ class VideoPlayer {
         parentElemVideo.appendChild(video);
 
         // Video Src
-        let xhr = new XMLHttpRequest();
+        video.src = videoSrc;
+        /*let xhr = new XMLHttpRequest();
         xhr.open("GET", videoSrc);
         xhr.responseType = "arraybuffer";
         xhr.onload = () => {
@@ -49,7 +50,7 @@ class VideoPlayer {
             const url = URL.createObjectURL(blob);
             video.src = url;
         };
-        xhr.send();
+        xhr.send();*/
 
         // Controls
         let wrapper = document.createElement("div");
