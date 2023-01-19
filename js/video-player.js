@@ -1,5 +1,5 @@
 class VideoPlayer {
-    constructor(parentElemVideo, { /*videoId,*/ videoSrc, videoPoster }) {
+    constructor(parentElemVideo, { videoSrc, videoPoster, videoCurrentTime }) {
         //! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc.
         const iconsSvg = {
             play: {
@@ -20,37 +20,50 @@ class VideoPlayer {
             }
         };
 
+        let timeoutControls;
+        parentElemVideo.onmouseenter = () => {
+            parentElemVideo.classList.add("show-controls");
+            if(!document.fullscreenElement) return;
+            clearTimeout(timeoutControls);
+            timeoutControls = setTimeout(() => {
+                parentElemVideo.classList.remove("show-controls");
+                clearTimeout(timeoutControls);
+            }, 3*1000);
+        }
+        parentElemVideo.onmouseleave = () => {
+            parentElemVideo.classList.remove("show-controls");
+            clearTimeout(timeoutControls);
+        };
+        parentElemVideo.onmousemove = () => {
+            if(!document.fullscreenElement) return;
+            parentElemVideo.classList.add("show-controls");
+            clearTimeout(timeoutControls);
+            timeoutControls = setTimeout(() => {
+                parentElemVideo.classList.remove("show-controls");
+                clearTimeout(timeoutControls);
+            }, 3*1000);
+        };
+
         // Video
-        let video = document.createElement("video");
-        video.src = videoSrc;
-        if(videoPoster) video.poster = videoPoster;
-        video.onplay = () => {
+        this.video = document.createElement("video");
+        this.video.src = videoSrc;
+        if(videoPoster) this.video.poster = videoPoster;
+        this.video.onplay = () => {
             videoControlPlay.title = "Pause";
             videoControlPlay.replaceChildren(
                 this.createSvg(iconsSvg.pause)
             );
         };
-        video.onpause = () => {
+        this.video.onpause = () => {
             videoControlPlay.title = "Play";
             videoControlPlay.replaceChildren(
                 this.createSvg(iconsSvg.play)
             );
         };
-        //if(window.localStorage.getItem(`VideoPlayer_${videoId}`)) video.currentTime = window.localStorage.getItem(`VideoPlayer_${videoId}`);
-        //if(String(videoId)) video.addEventListener("timeupdate", () => window.localStorage.setItem(`VideoPlayer_${videoId}`, video.currentTime));
-        parentElemVideo.appendChild(video);
-
-        // Video Src
-        video.src = videoSrc;
-        /*let xhr = new XMLHttpRequest();
-        xhr.open("GET", videoSrc);
-        xhr.responseType = "arraybuffer";
-        xhr.onload = () => {
-            const blob = new Blob([ xhr.response ]);
-            const url = URL.createObjectURL(blob);
-            video.src = url;
+        this.video.onloadeddata = () => {
+            this.video.currentTime = videoCurrentTime || 0;
         };
-        xhr.send();*/
+        parentElemVideo.appendChild(this.video);
 
         // Controls
         let wrapper = document.createElement("div");
@@ -61,10 +74,10 @@ class VideoPlayer {
                 let videoControlPlay = document.createElement("button");
                 videoControlPlay.title = "Play";
                 videoControlPlay.onclick = () => {
-                    if(video.paused) {
-                        video.play();
+                    if(this.video.paused) {
+                        this.video.play();
                     } else {
-                        video.pause();
+                        this.video.pause();
                     };
                 };
                 videoControlPlay.appendChild(
@@ -81,7 +94,7 @@ class VideoPlayer {
                 let videoControlTime = document.createElement("input");
                 videoControlTime.type = "range";
                 videoControlTime.classList.add("slider");
-                videoControlTime.oninput = () => video.currentTime = video.duration*(videoControlTime.value/100);
+                videoControlTime.oninput = () => this.video.currentTime = this.video.duration*(videoControlTime.value/100);
                 videoControlTime.value = 0;
                 controls.appendChild(videoControlTime);
 
@@ -90,22 +103,27 @@ class VideoPlayer {
                 videoTimeRemaining.innerHTML = "00:00";
                 controls.appendChild(videoTimeRemaining);
 
-                video.addEventListener("timeupdate", () => {
-                    videoTimeCurrent.innerHTML = this.formatTime(video.currentTime);
-                    videoTimeRemaining.innerHTML = this.formatTime(video.duration-video.currentTime);
-                    videoControlTime.value = (video.currentTime/video.duration)*100;
+                this.video.addEventListener("timeupdate", () => {
+                    const { currentTime, duration } = this.video;
+                    videoTimeCurrent.innerHTML = this.formatTime(currentTime);
+                    videoTimeRemaining.innerHTML = this.formatTime(duration-currentTime);
+                    videoControlTime.value = (currentTime/duration)*100;
                 });
 
                 // Full screen
                 let videoControlsFullScreen = document.createElement("button");
+                videoControlsFullScreen.title = "Full screen";
                 videoControlsFullScreen.onclick = () => parentElemVideo.requestFullscreen();
                 parentElemVideo.onfullscreenchange = () => {
+                    clearTimeout(timeoutControls);
                     if(document.fullscreenElement) {
+                        videoControlsFullScreen.title = "Exit full screen";
                         videoControlsFullScreen.onclick = () => document.exitFullscreen();
                         videoControlsFullScreen.replaceChildren(
                             this.createSvg(iconsSvg.compress)
                         );
                     } else {
+                        videoControlsFullScreen.title = "Full screen";
                         videoControlsFullScreen.onclick = () => parentElemVideo.requestFullscreen();
                         videoControlsFullScreen.replaceChildren(
                             this.createSvg(iconsSvg.expand)
