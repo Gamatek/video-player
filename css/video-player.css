@@ -166,3 +166,9 @@
         width: 256px;
     }
 }
+
+@media (max-width: 600px) {
+    .video-player:fullscreen .wrapper .controls .slider {
+        width: 64px;
+    }
+}
