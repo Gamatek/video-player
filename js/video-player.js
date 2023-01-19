@@ -1,5 +1,5 @@
 class VideoPlayer {
-    constructor(parentElemVideo, { videoId, videoSrc, videoPoster }) {
+    constructor(parentElemVideo, { /*videoId,*/ videoSrc, videoPoster }) {
         //! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc.
         const iconsSvg = {
             play: {
@@ -36,8 +36,8 @@ class VideoPlayer {
                 this.createSvg(iconsSvg.play)
             );
         };
-        if(String(videoId)) video.addEventListener("timeupdate", () => window.localStorage.setItem(`VideoPlayer_${videoId}`, video.currentTime));
-        if(window.localStorage.getItem(`VideoPlayer_${videoId}`)) video.currentTime = window.localStorage.getItem(`VideoPlayer_${videoId}`);
+        //if(window.localStorage.getItem(`VideoPlayer_${videoId}`)) video.currentTime = window.localStorage.getItem(`VideoPlayer_${videoId}`);
+        //if(String(videoId)) video.addEventListener("timeupdate", () => window.localStorage.setItem(`VideoPlayer_${videoId}`, video.currentTime));
         parentElemVideo.appendChild(video);
 
         // Video Src
