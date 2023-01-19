@@ -20,6 +20,8 @@ class VideoPlayer {
             }
         };
 
+        this.parentElemVideo = parentElemVideo;
+
         let timeoutControls;
         parentElemVideo.onmouseenter = () => {
             parentElemVideo.classList.add("show-controls");
@@ -60,9 +62,9 @@ class VideoPlayer {
                 this.createSvg(iconsSvg.play)
             );
         };
-        this.video.onloadeddata = () => {
-            this.video.currentTime = videoCurrentTime || 0;
-        };
+        this.video.onloadeddata = () => this.video.currentTime = videoCurrentTime || 0;
+        this.video.onwaiting = () => this.createLoader();
+        this.video.onprogress = () => this?.loader?.remove();
         parentElemVideo.appendChild(this.video);
 
         // Controls
@@ -158,5 +160,15 @@ class VideoPlayer {
         pathElem.setAttribute("d", path);
         svg.appendChild(pathElem);
         return svg;
+    };
+
+    createLoader = () => {
+        let loader = document.createElement("div");
+        loader.classList.add("loader");
+            let spinner = document.createElement("div");
+            spinner.classList.add("spinner");
+            loader.appendChild(spinner);
+        this.parentElemVideo.appendChild(loader);
+        this.loader = loader;
     };
 };
