@@ -13,6 +13,7 @@ This project was inspired by the default video player (Pictures) in Windows 11.
     .video-player {
         border-radius: 8px;
         width: 900px;
+        --main-color: #1b76ff;
     }
 </style>
 
