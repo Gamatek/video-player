@@ -1,6 +1,5 @@
 .video-player {
     background: #000;
-    border-radius: 8px;
     position: relative;
     overflow: hidden;
     aspect-ratio: 16/9;
