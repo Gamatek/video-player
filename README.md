@@ -9,6 +9,12 @@ This project was inspired by the default video player (Pictures) in Windows 11.
 <!-- Head -->
 <link rel="stylesheet" href="./css/video-player.css">
 <script src="./js/video-player.js"></script>
+<style>
+    .video-player {
+        border-radius: 8px;
+        width: 900px;
+    }
+</style>
 
 <!-- Body -->
 <div class="video-player" id="video-player"></div>
