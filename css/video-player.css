@@ -57,6 +57,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: default;
 }
 
 .video-player .wrapper .controls button:hover {
