@@ -94,7 +94,7 @@
     appearance: none;
     width: 24px;
     height: 24px;
-    background: #1b76ff;
+    background: var(--main-color);
     border: 6px solid rgba(50, 50, 50);
     border-radius: 50%;
     cursor: default;
@@ -133,7 +133,7 @@
     width: 100px;
     aspect-ratio: 1;
     background:
-        radial-gradient(farthest-side, #1b76ff 92%, transparent) top,
+        radial-gradient(farthest-side, var(--main-color) 92%, transparent) top,
         radial-gradient(farthest-side, #eee 92%, transparent) left,
         radial-gradient(farthest-side, #eee 92%, transparent) right,
         radial-gradient(farthest-side, #eee 92%, transparent) bottom;
