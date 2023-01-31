@@ -72,7 +72,7 @@ class VideoPlayer {
                 this.video.pause();
             };
         };
-        this.ondblclick = () => {
+        this.video.ondblclick = () => {
             clearTimeout(timeoutControls);
             if(document.fullscreenElement) {
                 document.exitFullscreen();
