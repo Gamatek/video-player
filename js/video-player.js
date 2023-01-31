@@ -29,6 +29,14 @@ class VideoPlayer {
                 } else {
                     this.video.pause();
                 };
+            },
+            fullscreen: () => {
+                clearTimeout(timeoutControls);
+                if(document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    parentElemVideo.requestFullscreen();
+                };
             }
         };
 
@@ -79,14 +87,7 @@ class VideoPlayer {
         this.video.onwaiting = () => this.createLoader();
         this.video.oncanplay = () => this?.loader?.remove();
         this.video.onclick = handlers.play;
-        this.video.ondblclick = () => {
-            clearTimeout(timeoutControls);
-            if(document.fullscreenElement) {
-                document.exitFullscreen();
-            } else {
-                parentElemVideo.requestFullscreen();
-            };
-        };
+        this.video.ondblclick = handlers.fullscreen;
         this.video.onkeydown = (evt) => {
             switch (evt.code) {
                 case "Space": {
@@ -107,6 +108,10 @@ class VideoPlayer {
 
                 case "ArrowDown": {
                     handlers.downVolume();
+                }; break;
+
+                case "KeyF": {
+                    handlers.fullscreen();
                 }; break;
             };
         };
