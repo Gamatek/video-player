@@ -20,6 +20,18 @@ class VideoPlayer {
             }
         };
 
+        const handlers = {
+            upVolume: () => this.video.volume = Math.min(this.video.volume+0.1, 1),
+            downVolume: () => this.video.volume = Math.max(this.video.volume-0.1, 0),
+            play: () => {
+                if(this.video.paused) {
+                    this.video.play();
+                } else {
+                    this.video.pause();
+                };
+            }
+        };
+
         this.parentElemVideo = parentElemVideo;
 
         let timeoutControls;
@@ -50,6 +62,7 @@ class VideoPlayer {
         this.video = document.createElement("video");
         this.video.src = videoSrc;
         if(videoPoster) this.video.poster = videoPoster;
+        this.video.tabIndex = -1;
         this.video.onplay = () => {
             videoControlPlay.title = "Pause";
             videoControlPlay.replaceChildren(
@@ -65,19 +78,43 @@ class VideoPlayer {
         this.video.onloadeddata = () => this.video.currentTime = videoCurrentTime || 0;
         this.video.onwaiting = () => this.createLoader();
         this.video.oncanplay = () => this?.loader?.remove();
-        this.video.onclick = () => {
-            if(this.video.paused) {
-                this.video.play();
-            } else {
-                this.video.pause();
-            };
-        };
+        this.video.onclick = handlers.play;
         this.video.ondblclick = () => {
             clearTimeout(timeoutControls);
             if(document.fullscreenElement) {
                 document.exitFullscreen();
             } else {
                 parentElemVideo.requestFullscreen();
+            };
+        };
+        this.video.onkeydown = (evt) => {
+            switch (evt.code) {
+                case "Space": {
+                    handlers.play();
+                }; break;
+
+                case "ArrowLeft": {
+                    this.video.currentTime -= 10;
+                }; break;
+
+                case "ArrowRight": {
+                    this.video.currentTime += 10;
+                }; break;
+
+                case "ArrowUp": {
+                    handlers.upVolume();
+                }; break;
+
+                case "ArrowDown": {
+                    handlers.downVolume();
+                }; break;
+            };
+        };
+        this.video.onwheel = (evt) => {
+            if(evt.deltaY < 0) {
+                handlers.upVolume();
+            } else if(evt.deltaY > 0) {
+                handlers.downVolume();
             };
         };
         parentElemVideo.appendChild(this.video);
@@ -90,13 +127,7 @@ class VideoPlayer {
                 // Play button
                 let videoControlPlay = document.createElement("button");
                 videoControlPlay.title = "Play";
-                videoControlPlay.onclick = () => {
-                    if(this.video.paused) {
-                        this.video.play();
-                    } else {
-                        this.video.pause();
-                    };
-                };
+                videoControlPlay.onclick = handlers.play;
                 videoControlPlay.appendChild(
                     this.createSvg(iconsSvg.play)
                 );
