@@ -45,14 +45,6 @@ class VideoPlayer {
                 clearTimeout(timeoutControls);
             }, 3*1000);
         };
-        parentElemVideo.ondblclick = () => {
-            clearTimeout(timeoutControls);
-            if(document.fullscreenElement) {
-                document.exitFullscreen();
-            } else {
-                parentElemVideo.requestFullscreen();
-            };
-        };
 
         // Video
         this.video = document.createElement("video");
@@ -73,14 +65,22 @@ class VideoPlayer {
         this.video.onloadeddata = () => this.video.currentTime = videoCurrentTime || 0;
         this.video.onwaiting = () => this.createLoader();
         this.video.oncanplay = () => this?.loader?.remove();
-        parentElemVideo.appendChild(this.video);
-        parentElemVideo.onclick = () => {
+        this.video.onclick = () => {
             if(this.video.paused) {
                 this.video.play();
             } else {
                 this.video.pause();
             };
         };
+        this.ondblclick = () => {
+            clearTimeout(timeoutControls);
+            if(document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                parentElemVideo.requestFullscreen();
+            };
+        };
+        parentElemVideo.appendChild(this.video);
 
         // Controls
         let wrapper = document.createElement("div");
