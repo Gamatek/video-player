@@ -89,30 +89,24 @@ class VideoPlayer {
         this.video.onclick = handlers.play;
         this.video.ondblclick = handlers.fullscreen;
         this.video.onkeydown = (evt) => {
+            console.log(evt);
             switch (evt.code) {
-                case "Space": {
-                    handlers.play();
-                }; break;
-
-                case "ArrowLeft": {
-                    this.video.currentTime -= 10;
-                }; break;
-
-                case "ArrowRight": {
-                    this.video.currentTime += 10;
-                }; break;
-
-                case "ArrowUp": {
-                    handlers.upVolume();
-                }; break;
-
-                case "ArrowDown": {
-                    handlers.downVolume();
-                }; break;
-
-                case "KeyF": {
-                    handlers.fullscreen();
-                }; break;
+                case "Space": handlers.play(); break;
+                case "ArrowLeft": this.video.currentTime -= 5; break;
+                case "ArrowRight": this.video.currentTime += 5; break;
+                case "ArrowUp": handlers.upVolume(); break;
+                case "ArrowDown": handlers.downVolume(); break;
+                case "KeyF": handlers.fullscreen(); break;
+                case "Numpad0": this.video.currentTime = 0; break;
+                case "Numpad1": this.video.currentTime = this.video.duration*0.1; break;
+                case "Numpad2": this.video.currentTime = this.video.duration*0.2; break;
+                case "Numpad3": this.video.currentTime = this.video.duration*0.3; break;
+                case "Numpad4": this.video.currentTime = this.video.duration*0.4; break;
+                case "Numpad5": this.video.currentTime = this.video.duration*0.5; break;
+                case "Numpad6": this.video.currentTime = this.video.duration*0.6; break;
+                case "Numpad7": this.video.currentTime = this.video.duration*0.7; break;
+                case "Numpad8": this.video.currentTime = this.video.duration*0.8; break;
+                case "Numpad9": this.video.currentTime = this.video.duration*0.9; break;
             };
         };
         this.video.onwheel = (evt) => {
