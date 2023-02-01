@@ -28,6 +28,8 @@ class VideoPlayer {
                     this.video.play();
                 } else {
                     this.video.pause();
+                    clearTimeout(timeoutControls);
+                    parentElemVideo.classList.add("show-controls");
                 };
             },
             fullscreen: () => {
@@ -53,6 +55,7 @@ class VideoPlayer {
             }, 3*1000);
         }
         parentElemVideo.onmouseleave = () => {
+            if(this.video.paused) return;
             parentElemVideo.classList.remove("show-controls");
             clearTimeout(timeoutControls);
         };
@@ -86,10 +89,9 @@ class VideoPlayer {
         this.video.onloadeddata = () => this.video.currentTime = videoCurrentTime || 0;
         this.video.onwaiting = () => this.createLoader();
         this.video.oncanplay = () => this?.loader?.remove();
-        this.video.onclick = handlers.play;
-        this.video.ondblclick = handlers.fullscreen;
+        this.video.onclick = () => { if(document.body.clientWidth > 900) handlers.play(); };
+        this.video.ondblclick = () => { if(document.body.clientWidth > 900) handlers.fullscreen(); };
         this.video.onkeydown = (evt) => {
-            console.log(evt);
             switch (evt.code) {
                 case "Space": handlers.play(); break;
                 case "ArrowLeft": this.video.currentTime -= 5; break;
@@ -138,13 +140,13 @@ class VideoPlayer {
                 controls.appendChild(videoTimeCurrent);
 
                 // Progress time
-                let videoControlTime = document.createElement("input");
-                videoControlTime.type = "range";
-                videoControlTime.classList.add("slider");
-                videoControlTime.oninput = () => this.video.currentTime = this.video.duration*(videoControlTime.value/100);
-                videoControlTime.value = 0;
-                controls.appendChild(videoControlTime);
-
+                let videoProgressTime = document.createElement("input");
+                videoProgressTime.type = "range";
+                videoProgressTime.classList.add("progress");
+                videoProgressTime.oninput = () => this.video.currentTime = this.video.duration*(videoProgressTime.value/100);
+                videoProgressTime.value = 0;
+                controls.appendChild(videoProgressTime);
+                
                 // Time remaining
                 let videoTimeRemaining = document.createElement("span");
                 videoTimeRemaining.innerHTML = "00:00";
@@ -154,7 +156,7 @@ class VideoPlayer {
                     const { currentTime, duration } = this.video;
                     videoTimeCurrent.innerHTML = this.formatTime(currentTime);
                     videoTimeRemaining.innerHTML = this.formatTime(duration-currentTime);
-                    videoControlTime.value = (currentTime/duration)*100;
+                    videoProgressTime.value = (currentTime/duration)*100;
                 });
 
                 // Full screen
