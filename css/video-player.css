@@ -46,6 +46,7 @@
     padding: 4px;
     gap: 4px;
     border-radius: 4px;
+    width: 50%;
 }
 
 /* Button */
@@ -75,33 +76,28 @@
     margin: 0 8px;
 }
 
-/* Slider */
-.video-player .wrapper .controls .slider {
-    -webkit-appearance: none;
+/* Progress */
+.video-player .wrapper .controls .progress {
+    appearance: none;
     height: 6px;
     background: rgba(255, 255, 255, 0.5);
     outline: none;
     border-radius: 8px;
-    width: 256px;
+    width: 100%;
 }
 
-.video-player:fullscreen .wrapper .controls .slider {
-    width: 512px;
-}
-
-.video-player .wrapper .controls .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
+.video-player .wrapper .controls .progress::-webkit-slider-thumb {
     appearance: none;
     width: 24px;
     height: 24px;
-    background: var(--main-color);
+    background: var(--color);
     border: 6px solid rgba(50, 50, 50);
     border-radius: 50%;
     cursor: default;
     transition: border ease-in-out 0.1s;
 }
 
-.video-player .wrapper .controls .slider::-webkit-slider-thumb:hover {
+.video-player .wrapper .controls .progress::-webkit-slider-thumb:hover {
     border-width: 4px;
 }
 
@@ -133,7 +129,7 @@
     width: 100px;
     aspect-ratio: 1;
     background:
-        radial-gradient(farthest-side, var(--main-color) 92%, transparent) top,
+        radial-gradient(farthest-side, var(--color) 92%, transparent) top,
         radial-gradient(farthest-side, #eee 92%, transparent) left,
         radial-gradient(farthest-side, #eee 92%, transparent) right,
         radial-gradient(farthest-side, #eee 92%, transparent) bottom;
@@ -158,17 +154,11 @@
 }
 
 @media (max-width: 900px) {
-    .video-player:not(:fullscreen) .wrapper .controls .slider {
-        width: 128px;
+    .video-player .wrapper .controls {
+        width: 100%;
     }
 
-    .video-player:fullscreen .wrapper .controls .slider {
-        width: 256px;
-    }
-}
-
-@media (max-width: 600px) {
-    .video-player:fullscreen .wrapper .controls .slider {
-        width: 64px;
+    .video-player.show-controls .wrapper {
+        transform: translateY(0);
     }
 }
