@@ -1,5 +1,5 @@
 class VideoPlayer {
-    constructor(parentElemVideo, { videoSrc, videoPoster, videoCurrentTime }) {
+    constructor(parentElemVideo, { videoSrc, videoPoster, videoCurrentTime, videoName }) {
         //! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc.
         const iconsSvg = {
             play: {
@@ -67,6 +67,14 @@ class VideoPlayer {
                 parentElemVideo.classList.remove("show-controls");
                 clearTimeout(timeoutControls);
             }, 3*1000);
+        };
+
+        // Name
+        if(videoName) {
+            let span = document.createElement("span");
+            span.classList.add("video-name");
+            span.innerHTML = videoName;
+            parentElemVideo.appendChild(span);
         };
 
         // Video
