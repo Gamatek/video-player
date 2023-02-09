@@ -154,10 +154,10 @@
         radial-gradient(farthest-side, #eee 92%, transparent) bottom;
     background-size: 16px 16px;
     background-repeat: no-repeat;
-    animation: spin cubic-bezier(1, 0.95, 0.95, 1) 1s infinite;
+    animation: videoPlayerSpin cubic-bezier(1, 0.95, 0.95, 1) 1s infinite;
 }
 
-@keyframes spin {
+@keyframes videoPlayerSpin {
     0% {
         transform: rotate(0turn);
     }
