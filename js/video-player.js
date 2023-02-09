@@ -1,6 +1,6 @@
 class VideoPlayer {
     constructor(parentElemVideo, options) {
-        options = {
+        this.options = {
             src: options?.src,
             name: options?.name,
             currentTime: options?.currentTime
@@ -81,16 +81,16 @@ class VideoPlayer {
         };
 
         // Name
-        if(options.name) {
+        if(this.options.name) {
             let span = document.createElement("span");
             span.classList.add("video-name");
-            span.innerHTML = options.name;
+            span.innerHTML = this.options.name;
             parentElemVideo.appendChild(span);
         };
 
         // Video
         this.video = document.createElement("video");
-        this.video.src = options.src;
+        this.video.src = this.options.src;
         this.video.tabIndex = -1;
         this.video.onplay = () => {
             buttonPlay.title = "Pause";
@@ -104,7 +104,7 @@ class VideoPlayer {
                 this.createSvg(iconsSvg.play)
             );
         };
-        this.video.onloadeddata = () => this.video.currentTime = options.currentTime || 0;
+        this.video.onloadeddata = () => this.video.currentTime = this.options.currentTime || 0;
         this.video.onwaiting = () => this.createLoader();
         this.video.oncanplay = () => this?.loader?.remove();
         this.video.onclick = () => { if(document.body.clientWidth > 900) handlers.play(); };
