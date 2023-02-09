@@ -21,10 +21,9 @@ This project was inspired by the default video player (Pictures) in Windows 11.
 <div class="video-player" id="video-player"></div>
 <script>
     const player = new VideoPlayer(document.getElementById("video-player"), {
-        videoCurrentTime: window.localStorage.getItem("VideoPlayerCurrentTime"),
-        videoSrc: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4",
-        videoPoster: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg",
-        videoName: "View_From_A_Blue_Moon_Trailer-1080p"
+        src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4",
+        name: "View_From_A_Blue_Moon_Trailer-1080p",
+        currentTime: window.localStorage.getItem("VideoPlayerCurrentTime")
     });
     player.video.addEventListener("timeupdate", () => {
         window.localStorage.setItem("VideoPlayerCurrentTime", player.video.currentTime);
