@@ -154,6 +154,7 @@ class VideoPlayer {
 
                 // Volume
                 let buttonVolume = document.createElement("button");
+                buttonVolume.title = "Volume";
                 buttonVolume.replaceChildren(
                     this.createSvg(iconsSvg.volume)
                 );
