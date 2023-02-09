@@ -1,5 +1,11 @@
 class VideoPlayer {
-    constructor(parentElemVideo, { videoSrc, videoPoster, videoCurrentTime, videoName }) {
+    constructor(parentElemVideo, options) {
+        options = {
+            src: options?.src,
+            name: options?.name,
+            currentTime: options?.currentTime
+        };
+
         //! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc.
         const iconsSvg = {
             play: {
@@ -75,17 +81,16 @@ class VideoPlayer {
         };
 
         // Name
-        if(videoName) {
+        if(options.name) {
             let span = document.createElement("span");
             span.classList.add("video-name");
-            span.innerHTML = videoName;
+            span.innerHTML = options.name;
             parentElemVideo.appendChild(span);
         };
 
         // Video
         this.video = document.createElement("video");
-        this.video.src = videoSrc;
-        if(videoPoster) this.video.poster = videoPoster;
+        this.video.src = options.src;
         this.video.tabIndex = -1;
         this.video.onplay = () => {
             buttonPlay.title = "Pause";
@@ -99,7 +104,7 @@ class VideoPlayer {
                 this.createSvg(iconsSvg.play)
             );
         };
-        this.video.onloadeddata = () => this.video.currentTime = videoCurrentTime || 0;
+        this.video.onloadeddata = () => this.video.currentTime = options.currentTime || 0;
         this.video.onwaiting = () => this.createLoader();
         this.video.oncanplay = () => this?.loader?.remove();
         this.video.onclick = () => { if(document.body.clientWidth > 900) handlers.play(); };
