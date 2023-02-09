@@ -43,6 +43,7 @@ class VideoPlayer {
         };
 
         this.parentElemVideo = parentElemVideo;
+        parentElemVideo.classList.add("show-controls");
 
         let timeoutControls;
         parentElemVideo.onmouseenter = () => {
