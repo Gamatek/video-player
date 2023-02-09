@@ -17,6 +17,10 @@ class VideoPlayer {
             compress: {
                 viewBox: "0 0 448 512",
                 path: "M160 64c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V64zM32 320c-17.7 0-32 14.3-32 32s14.3 32 32 32H96v64c0 17.7 14.3 32 32 32s32-14.3 32-32V352c0-17.7-14.3-32-32-32H32zM352 64c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H352V64zM320 320c-17.7 0-32 14.3-32 32v96c0 17.7 14.3 32 32 32s32-14.3 32-32V384h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H320z"
+            },
+            volume: {
+                viewBox: "0 32 544 448",
+                path: "M473.1 107c43.2 35.2 70.9 88.9 70.9 149s-27.7 113.8-70.9 149c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C475.3 341.3 496 301.1 496 256s-20.7-85.3-53.2-111.8c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zm-60.5 74.5C434.1 199.1 448 225.9 448 256s-13.9 56.9-35.4 74.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C393.1 284.4 400 271 400 256s-6.9-28.4-17.7-37.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM301.1 34.8C312.6 40 320 51.4 320 64V448c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352H64c-35.3 0-64-28.7-64-64V224c0-35.3 28.7-64 64-64h67.8L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3z"
             }
         };
 
@@ -84,14 +88,14 @@ class VideoPlayer {
         if(videoPoster) this.video.poster = videoPoster;
         this.video.tabIndex = -1;
         this.video.onplay = () => {
-            videoControlPlay.title = "Pause";
-            videoControlPlay.replaceChildren(
+            buttonPlay.title = "Pause";
+            buttonPlay.replaceChildren(
                 this.createSvg(iconsSvg.pause)
             );
         };
         this.video.onpause = () => {
-            videoControlPlay.title = "Play";
-            videoControlPlay.replaceChildren(
+            buttonPlay.title = "Play";
+            buttonPlay.replaceChildren(
                 this.createSvg(iconsSvg.play)
             );
         };
@@ -135,26 +139,33 @@ class VideoPlayer {
             let controls = document.createElement("div");
             controls.classList.add("controls");
                 // Play button
-                let videoControlPlay = document.createElement("button");
-                videoControlPlay.title = "Play";
-                videoControlPlay.onclick = handlers.play;
-                videoControlPlay.appendChild(
+                let buttonPlay = document.createElement("button");
+                buttonPlay.title = "Play";
+                buttonPlay.onclick = handlers.play;
+                buttonPlay.appendChild(
                     this.createSvg(iconsSvg.play)
                 );
-                controls.appendChild(videoControlPlay);
+                controls.appendChild(buttonPlay);
 
                 // Current time
-                let videoTimeCurrent = document.createElement("span");
-                videoTimeCurrent.innerHTML = "00:00";
-                controls.appendChild(videoTimeCurrent);
+                let videoCurrentTime = document.createElement("span");
+                videoCurrentTime.innerHTML = "00:00";
+                controls.appendChild(videoCurrentTime);
+
+                // Volume
+                let buttonVolume = document.createElement("button");
+                buttonVolume.replaceChildren(
+                    this.createSvg(iconsSvg.volume)
+                );
+                controls.appendChild(buttonVolume);
 
                 // Progress time
-                let videoProgressTime = document.createElement("input");
-                videoProgressTime.type = "range";
-                videoProgressTime.classList.add("progress");
-                videoProgressTime.oninput = () => this.video.currentTime = this.video.duration*(videoProgressTime.value/100);
-                videoProgressTime.value = 0;
-                controls.appendChild(videoProgressTime);
+                let progressTime = document.createElement("input");
+                progressTime.type = "range";
+                progressTime.classList.add("progress");
+                progressTime.oninput = () => this.video.currentTime = this.video.duration*(progressTime.value/100);
+                progressTime.value = 0;
+                controls.appendChild(progressTime);
                 
                 // Time remaining
                 let videoTimeRemaining = document.createElement("span");
@@ -163,35 +174,35 @@ class VideoPlayer {
 
                 this.video.addEventListener("timeupdate", () => {
                     const { currentTime, duration } = this.video;
-                    videoTimeCurrent.innerHTML = this.formatTime(currentTime);
+                    videoCurrentTime.innerHTML = this.formatTime(currentTime);
                     videoTimeRemaining.innerHTML = this.formatTime(duration-currentTime);
-                    videoProgressTime.value = (currentTime/duration)*100;
+                    progressTime.value = (currentTime/duration)*100;
                 });
 
                 // Full screen
-                let videoControlsFullScreen = document.createElement("button");
-                videoControlsFullScreen.title = "Full screen";
-                videoControlsFullScreen.onclick = () => parentElemVideo.requestFullscreen();
+                let buttonFullScreen = document.createElement("button");
+                buttonFullScreen.title = "Full screen";
+                buttonFullScreen.onclick = () => parentElemVideo.requestFullscreen();
                 parentElemVideo.onfullscreenchange = () => {
                     clearTimeout(timeoutControls);
                     if(document.fullscreenElement) {
-                        videoControlsFullScreen.title = "Exit full screen";
-                        videoControlsFullScreen.onclick = () => document.exitFullscreen();
-                        videoControlsFullScreen.replaceChildren(
+                        buttonFullScreen.title = "Exit full screen";
+                        buttonFullScreen.onclick = () => document.exitFullscreen();
+                        buttonFullScreen.replaceChildren(
                             this.createSvg(iconsSvg.compress)
                         );
                     } else {
-                        videoControlsFullScreen.title = "Full screen";
-                        videoControlsFullScreen.onclick = () => parentElemVideo.requestFullscreen();
-                        videoControlsFullScreen.replaceChildren(
+                        buttonFullScreen.title = "Full screen";
+                        buttonFullScreen.onclick = () => parentElemVideo.requestFullscreen();
+                        buttonFullScreen.replaceChildren(
                             this.createSvg(iconsSvg.expand)
                         );
                     };
                 };
-                videoControlsFullScreen.appendChild(
+                buttonFullScreen.appendChild(
                     this.createSvg(iconsSvg.expand)
                 );
-                controls.appendChild(videoControlsFullScreen);
+                controls.appendChild(buttonFullScreen);
             wrapper.appendChild(controls);
         parentElemVideo.appendChild(wrapper);
     };
