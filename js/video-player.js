@@ -152,17 +152,17 @@ class VideoPlayer {
                 );
                 controls.appendChild(buttonPlay);
 
-                // Current time
-                let videoCurrentTime = document.createElement("span");
-                videoCurrentTime.innerHTML = "00:00";
-                controls.appendChild(videoCurrentTime);
-
                 // Volume
                 let buttonVolume = document.createElement("button");
                 buttonVolume.replaceChildren(
                     this.createSvg(iconsSvg.volume)
                 );
                 controls.appendChild(buttonVolume);
+
+                // Current time
+                let videoCurrentTime = document.createElement("span");
+                videoCurrentTime.innerHTML = "00:00";
+                controls.appendChild(videoCurrentTime);
 
                 // Progress time
                 let progressTime = document.createElement("input");
