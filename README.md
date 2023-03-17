@@ -11,9 +11,9 @@ This project was inspired by the default video player (Pictures) in Windows 11.
 <script src="./js/video-player.js"></script>
 <style>
     .video-player {
+        --videoPlayerColor: #1e90ff; /* dodgerblue */
         border-radius: 8px;
         width: 900px;
-        --color: #1e90ff; /* dodgerblue */
     }
 </style>
 
