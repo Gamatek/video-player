@@ -238,9 +238,9 @@ class VideoPlayer {
     createLoader = () => {
         if(this.loader) return;
         let loader = document.createElement("div");
-        loader.classList.add("loader");
+        loader.classList.add("video-player-loader");
             let spinner = document.createElement("div");
-            spinner.classList.add("spinner");
+            spinner.classList.add("video-player-spinner");
             loader.appendChild(spinner);
         this.parentElemVideo.appendChild(loader);
         this.loader = loader;
