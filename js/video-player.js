@@ -62,12 +62,14 @@ class VideoPlayer {
             clearTimeout(timeoutControls);
             timeoutControls = setTimeout(() => {
                 parentElemVideo.classList.remove("show-controls");
+                controlVolume.classList.remove("show");
                 clearTimeout(timeoutControls);
             }, 3*1000);
         }
         parentElemVideo.onmouseleave = () => {
             if(this.video.paused) return;
             parentElemVideo.classList.remove("show-controls");
+            controlVolume.classList.remove("show");
             clearTimeout(timeoutControls);
         };
         parentElemVideo.onmousemove = () => {
@@ -76,6 +78,7 @@ class VideoPlayer {
             clearTimeout(timeoutControls);
             timeoutControls = setTimeout(() => {
                 parentElemVideo.classList.remove("show-controls");
+                controlVolume.classList.remove("show");
                 clearTimeout(timeoutControls);
             }, 3*1000);
         };
@@ -109,6 +112,7 @@ class VideoPlayer {
         this.video.oncanplay = () => this?.loader?.remove();
         this.video.onclick = () => { if(document.body.clientWidth > 900) handlers.play(); };
         this.video.ondblclick = () => { if(document.body.clientWidth > 900) handlers.fullscreen(); };
+        this.video.onvolumechange = () => textVolume.innerHTML = Math.floor(this.video.volume*100)+"%";
         this.video.onkeydown = (evt) => {
             switch (evt.code) {
                 case "Space": handlers.play(); break;
@@ -155,10 +159,28 @@ class VideoPlayer {
                 // Volume
                 let buttonVolume = document.createElement("button");
                 buttonVolume.title = "Volume";
+                buttonVolume.onclick = () => {
+                    controlVolume.classList.toggle("show");
+                    inputVolume.value = this.video.volume*100;
+                };
                 buttonVolume.replaceChildren(
                     this.createSvg(iconsSvg.volume)
                 );
                 controls.appendChild(buttonVolume);
+
+                let controlVolume = document.createElement("div");
+                controlVolume.classList.add("volume-control");
+                    let inputVolume = document.createElement("input");
+                    inputVolume.type = "range";
+                    inputVolume.classList.add("volume-progress", "progress");
+                    inputVolume.value = 100;
+                    inputVolume.oninput = () => this.video.volume = inputVolume.value/100;
+                    controlVolume.appendChild(inputVolume);
+
+                    let textVolume = document.createElement("span");
+                    textVolume.innerHTML = "100%";
+                    controlVolume.appendChild(textVolume);
+                controls.appendChild(controlVolume);
 
                 // Current time
                 let videoCurrentTime = document.createElement("span");
