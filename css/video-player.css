@@ -58,7 +58,7 @@
 .video-player .wrapper .controls {
     display: flex;
     align-items: center;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(40, 40, 40, 0.7);
     backdrop-filter: blur(50px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     color: #fff;
@@ -66,6 +66,7 @@
     gap: 4px;
     border-radius: 4px;
     width: 50%;
+    position: relative;
 }
 
 /* Button */
@@ -91,7 +92,7 @@
 }
 
 /* Time */
-.video-player .wrapper .controls span {
+.video-player .wrapper .controls > span {
     margin: 0 8px;
 }
 
@@ -118,6 +119,35 @@
 
 .video-player .wrapper .controls .progress::-webkit-slider-thumb:hover {
     border-width: 4px;
+}
+
+/* Volume */
+.video-player .wrapper .controls .volume-control {
+    position: absolute;
+    display: none;
+    align-items: center;
+    top: -75px;
+    left: 16px;
+    width: 180px;
+    height: 64px;
+    background: rgba(40, 40, 40, 0.7);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    padding: 0 20px;
+    border-radius: 4px;
+}
+
+.video-player .wrapper .controls .volume-control.show {
+    display: flex;
+}
+
+.video-player .wrapper .controls .volume-control input {
+    width: 128px !important;
+}
+
+.video-player .wrapper .controls .volume-control span {
+    margin-left: 10px;
+    text-align: center;
+    width: 100%;
 }
 
 /* Loader */
