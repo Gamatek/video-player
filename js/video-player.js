@@ -1,10 +1,12 @@
 class VideoPlayer {
-    constructor(parentElemVideo, options) {
+    constructor(parentElemVideoSelector, options) {
         this.options = {
             src: options?.src,
             name: options?.name,
             currentTime: options?.currentTime
         };
+
+        let parentElemVideo = document.querySelector(parentElemVideoSelector);
 
         // https://fonts.google.com/icons (Material Symbols)
         const iconsSvg = {
