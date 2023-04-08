@@ -5,12 +5,12 @@ This project was inspired by the default video player (Pictures) in Windows 11.
 <img src="preview.png">
 
 ## Setup
-### HTML
+#### HTML
 ```html
 <div class="video-player" id="video-player"></div>
 ```
 
-### CSS
+#### CSS
 ```css
 .video-player {
     --videoPlayerColor: #1e90ff; /* dodgerblue */
@@ -19,7 +19,7 @@ This project was inspired by the default video player (Pictures) in Windows 11.
 }
 ```
 
-### JS
+#### JS
 ```js
 const player = new VideoPlayer(document.getElementById("video-player"), {
     src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4",
