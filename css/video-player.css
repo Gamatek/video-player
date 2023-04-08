@@ -71,7 +71,7 @@
 
 /* Button */
 .video-player .wrapper .controls button {
-    padding: 10px;
+    padding: 6px;
     border: none;
     background: none;
     border-radius: 4px;
@@ -86,14 +86,15 @@
 }
 
 .video-player .wrapper .controls button svg {
-    width: 18px;
-    height: 18px;
+    width: 26px;
+    height: 26px;
     color: #fff;
 }
 
 /* Time */
 .video-player .wrapper .controls > span {
     margin: 0 8px;
+    font-size: 14px;
 }
 
 /* Progress */
