@@ -6,28 +6,13 @@ class VideoPlayer {
             currentTime: options?.currentTime
         };
 
-        //! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc.
+        // https://fonts.google.com/icons (Material Symbols)
         const iconsSvg = {
-            play: {
-                viewBox: "0 0 384 512",
-                path: "M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"
-            },
-            pause: {
-                viewBox: "0 0 320 512",
-                path: "M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"
-            },
-            expand: {
-                viewBox: "0 0 448 512",
-                path: "M32 32C14.3 32 0 46.3 0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V352z"
-            },
-            compress: {
-                viewBox: "0 0 448 512",
-                path: "M160 64c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V64zM32 320c-17.7 0-32 14.3-32 32s14.3 32 32 32H96v64c0 17.7 14.3 32 32 32s32-14.3 32-32V352c0-17.7-14.3-32-32-32H32zM352 64c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H352V64zM320 320c-17.7 0-32 14.3-32 32v96c0 17.7 14.3 32 32 32s32-14.3 32-32V384h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H320z"
-            },
-            volume: {
-                viewBox: "0 32 544 448",
-                path: "M473.1 107c43.2 35.2 70.9 88.9 70.9 149s-27.7 113.8-70.9 149c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C475.3 341.3 496 301.1 496 256s-20.7-85.3-53.2-111.8c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zm-60.5 74.5C434.1 199.1 448 225.9 448 256s-13.9 56.9-35.4 74.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C393.1 284.4 400 271 400 256s-6.9-28.4-17.7-37.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM301.1 34.8C312.6 40 320 51.4 320 64V448c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352H64c-35.3 0-64-28.7-64-64V224c0-35.3 28.7-64 64-64h67.8L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3z"
-            }
+            play_arrow: "M366 824q-15 10-30.5 1T320 798V348q0-18 15.5-27t30.5 1l354 226q14 9 14 25t-14 25L366 824Z",
+            pause: "M583 796V356q0-24.75 17.677-42.375t42.5-17.625Q668 296 685.5 313.625T703 356v440q0 24.75-17.677 42.375T642.823 856Q618 856 600.5 838.375T583 796Zm-325 0V356q0-24.75 17.677-42.375t42.5-17.625Q343 296 360.5 313.625T378 356v440q0 24.75-17.677 42.375T317.823 856Q293 856 275.5 838.375T258 796Z",
+            volume_up: "M602 913q-16 5-29-5t-13-27q0-8 4.5-14.5T577 858q91-32 147-109t56-174q0-97-56-174.5T577 292q-8-2-12.5-9t-4.5-15q0-17 13.5-26.5T602 237q107 38 172.5 130.5T840 575q0 115-65.5 207.5T602 913ZM150 696q-13 0-21.5-8.5T120 666V486q0-13 8.5-21.5T150 456h130l149-149q14-14 32.5-6.5T480 328v496q0 20-18.5 27.5T429 845L280 696H150Zm390 48V407q54 17 87 64t33 105q0 59-33 105t-87 63Z",
+            fullscreen: "M230 856q-12.75 0-21.375-8.625T200 826V693q0-12.75 8.675-21.375 8.676-8.625 21.5-8.625 12.825 0 21.325 8.625T260 693v103h103q12.75 0 21.375 8.675 8.625 8.676 8.625 21.5 0 12.825-8.625 21.325T363 856H230Zm-.175-367Q217 489 208.5 480.375T200 459V326q0-12.75 8.625-21.375T230 296h133q12.75 0 21.375 8.675 8.625 8.676 8.625 21.5 0 12.825-8.625 21.325T363 356H260v103q0 12.75-8.675 21.375-8.676 8.625-21.5 8.625ZM597 856q-12.75 0-21.375-8.675-8.625-8.676-8.625-21.5 0-12.825 8.625-21.325T597 796h103V693q0-12.75 8.675-21.375 8.676-8.625 21.5-8.625 12.825 0 21.325 8.625T760 693v133q0 12.75-8.625 21.375T730 856H597Zm132.825-367Q717 489 708.5 480.375T700 459V356H597q-12.75 0-21.375-8.675-8.625-8.676-8.625-21.5 0-12.825 8.625-21.325T597 296h133q12.75 0 21.375 8.625T760 326v133q0 12.75-8.675 21.375-8.676 8.625-21.5 8.625Z",
+            fullscreen_exit: "M362.825 856Q350 856 341.5 847.375T333 826V723H230q-12.75 0-21.375-8.675-8.625-8.676-8.625-21.5 0-12.825 8.625-21.325T230 663h133q12.75 0 21.375 8.625T393 693v133q0 12.75-8.675 21.375-8.676 8.625-21.5 8.625ZM230 489q-12.75 0-21.375-8.675-8.625-8.676-8.625-21.5 0-12.825 8.625-21.325T230 429h103V326q0-12.75 8.675-21.375 8.676-8.625 21.5-8.625 12.825 0 21.325 8.625T393 326v133q0 12.75-8.625 21.375T363 489H230Zm366.825 367Q584 856 575.5 847.375T567 826V693q0-12.75 8.625-21.375T597 663h133q12.75 0 21.375 8.675 8.625 8.676 8.625 21.5 0 12.825-8.625 21.325T730 723H627v103q0 12.75-8.675 21.375-8.676 8.625-21.5 8.625ZM597 489q-12.75 0-21.375-8.625T567 459V326q0-12.75 8.675-21.375 8.676-8.625 21.5-8.625 12.825 0 21.325 8.625T627 326v103h103q12.75 0 21.375 8.675 8.625 8.676 8.625 21.5 0 12.825-8.625 21.325T730 489H597Z"
         };
 
         const handlers = {
@@ -104,7 +89,7 @@ class VideoPlayer {
         this.video.onpause = () => {
             buttonPlay.title = "Play";
             buttonPlay.replaceChildren(
-                this.createSvg(iconsSvg.play)
+                this.createSvg(iconsSvg.play_arrow)
             );
         };
         this.video.onloadeddata = () => this.video.currentTime = this.options.currentTime || 0;
@@ -152,7 +137,7 @@ class VideoPlayer {
                 buttonPlay.title = "Play";
                 buttonPlay.onclick = handlers.play;
                 buttonPlay.appendChild(
-                    this.createSvg(iconsSvg.play)
+                    this.createSvg(iconsSvg.play_arrow)
                 );
                 controls.appendChild(buttonPlay);
 
@@ -164,7 +149,7 @@ class VideoPlayer {
                     inputVolume.value = this.video.volume*100;
                 };
                 buttonVolume.replaceChildren(
-                    this.createSvg(iconsSvg.volume)
+                    this.createSvg(iconsSvg.volume_up)
                 );
                 controls.appendChild(buttonVolume);
 
@@ -217,18 +202,18 @@ class VideoPlayer {
                         buttonFullScreen.title = "Exit full screen";
                         buttonFullScreen.onclick = () => document.exitFullscreen();
                         buttonFullScreen.replaceChildren(
-                            this.createSvg(iconsSvg.compress)
+                            this.createSvg(iconsSvg.fullscreen_exit)
                         );
                     } else {
                         buttonFullScreen.title = "Full screen";
                         buttonFullScreen.onclick = () => parentElemVideo.requestFullscreen();
                         buttonFullScreen.replaceChildren(
-                            this.createSvg(iconsSvg.expand)
+                            this.createSvg(iconsSvg.fullscreen)
                         );
                     };
                 };
                 buttonFullScreen.appendChild(
-                    this.createSvg(iconsSvg.expand)
+                    this.createSvg(iconsSvg.fullscreen)
                 );
                 controls.appendChild(buttonFullScreen);
             wrapper.appendChild(controls);
@@ -246,15 +231,19 @@ class VideoPlayer {
         };
     };
 
-    createSvg = ({ viewBox, path }) => {
-        let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        svg.setAttribute("viewBox", viewBox);
-        svg.setAttribute("fill", "currentColor");
+    createSvg = (path) => {
+        let svgElem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svgElem.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        svgElem.setAttribute("viewBox", "0 96 960 960");
+        svgElem.setAttribute("fill", "currentColor");
+
         let pathElem = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        pathElem.setAttribute("stroke-linecap", "round");
+        pathElem.setAttribute("stroke-linejoin", "round");
         pathElem.setAttribute("d", path);
-        svg.appendChild(pathElem);
-        return svg;
+        svgElem.appendChild(pathElem);
+
+        return svgElem;
     };
 
     createLoader = () => {
