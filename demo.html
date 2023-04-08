@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Windows 11 Video Player</title>
+    <link rel="stylesheet" href="./css/video-player.css">
+    <script src="./js/video-player.js"></script>
+    <style>
+        .video-player {
+            --videoPlayerColor: #1e90ff; /* dodgerblue */
+            border-radius: 8px;
+            width: 900px;
+        }
+</style>
+</head>
+<body>
+    <div class="video-player" id="video-player"></div>
+    <script>
+        const player = new VideoPlayer(document.getElementById("video-player"), {
+            src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4",
+            name: "View_From_A_Blue_Moon_Trailer-1080p",
+            currentTime: window.localStorage.getItem("VideoPlayerCurrentTime")
+        });
+        player.video.addEventListener("timeupdate", () => {
+            window.localStorage.setItem("VideoPlayerCurrentTime", player.video.currentTime);
+        });
+    </script>
+</body>
+</html>
