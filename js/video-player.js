@@ -231,6 +231,11 @@ class VideoPlayer {
     /**
      * @private
      */
+    loader = null;
+
+    /**
+     * @private
+     */
     formatTime = (time) => {
         const seconds = String(Math.floor(time%60)).padStart(2, "0");
         const minutes = String(Math.floor(time/60)%60).padStart(2, "0");
