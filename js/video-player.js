@@ -228,6 +228,9 @@ class VideoPlayer {
         parentElemVideo.appendChild(wrapper);
     };
 
+    /**
+     * @private
+     */
     formatTime = (time) => {
         const seconds = String(Math.floor(time%60)).padStart(2, "0");
         const minutes = String(Math.floor(time/60)%60).padStart(2, "0");
@@ -239,6 +242,9 @@ class VideoPlayer {
         };
     };
 
+    /**
+     * @private
+     */
     createSvg = (path) => {
         let svgElem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         svgElem.setAttribute("xmlns", "http://www.w3.org/2000/svg");
@@ -254,6 +260,9 @@ class VideoPlayer {
         return svgElem;
     };
 
+    /**
+     * @private
+     */
     createLoader = () => {
         if(this.loader) return;
         let loader = document.createElement("div");
